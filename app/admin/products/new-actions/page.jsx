@@ -48,6 +48,17 @@ export default function NewProductActionPage() {
               defaultValue="0"
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-black">Image (URL)</label>
+            <input
+              name="imageUrl"
+              type="text"
+              className="w-full border rounded p-2 text-black"
+              placeholder="https://..."
+            />
+          </div>
+
         </div>
 
         <button className="px-4 py-2 rounded bg-black text-white">
