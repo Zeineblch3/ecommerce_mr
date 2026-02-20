@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getProductById, getAllProducts } from "../../lib/api";
+import { getAllProducts, getProductById } from "../../../app/actions/products";
+
 
 // Generer les routes statiques au build (SSG)
 export async function generateStaticParams() {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: product.title,
         description: product.description,
-        images: [product.image],
+        images: [product.imageUrl],
         type: 'website',
       },
     };
@@ -63,7 +64,7 @@ export default async function ProductPage({ params }) {
         {/* Colonne gauche : Image */}
         <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
           <Image
-            src={product.image}
+            src={product.imageUrl}
             alt={product.title}
             fill
             className="object-contain p-8"
@@ -83,20 +84,6 @@ export default async function ProductPage({ params }) {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {product.title}
           </h1>
-
-          {/* Rating */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex text-yellow-400 text-2xl">
-              {'★'.repeat(Math.round(product.rating.rate))}
-              {'☆'.repeat(5 - Math.round(product.rating.rate))}
-            </div>
-            <span className="text-gray-600">
-              {product.rating.rate} / 5
-            </span>
-            <span className="text-gray-500">
-              ({product.rating.count} avis)
-            </span>
-          </div>
 
           {/* Prix */}
           <div className="mb-8">
@@ -140,13 +127,9 @@ export default async function ProductPage({ params }) {
                 <dt className="font-semibold w-32">Prix :</dt>
                 <dd className="text-gray-600">{product.price}</dd>
               </div>
-              <div className="flex">
-                <dt className="font-semibold w-32">Note :</dt>
-                <dd className="text-gray-600">{product.rating.rate} / 5</dd>
-              </div>
+              
               <div className="flex">
                 <dt className="font-semibold w-32">Avis :</dt>
-                <dd className="text-gray-600">{product.rating.count} avis clients</dd>
               </div>
             </dl>
           </div>

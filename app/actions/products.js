@@ -1,7 +1,8 @@
 "use server";
 
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../src/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "../../src/lib/auth-utils";
 
 function slugify(text) {
   return text
@@ -13,29 +14,36 @@ function slugify(text) {
 }
 
 export async function createProduct(formData) {
-  const title = String(formData.get("title") || "").trim();
-  const description = String(formData.get("description") || "").trim();
-  const price = Number(formData.get("price"));
-  const stock = Number(formData.get("stock") || 0);
-  const imageUrl = String(formData.get("imageUrl") || "").trim();
+  await requireAdmin();
 
-  if (!title || !description || Number.isNaN(price)) {
-    throw new Error("Champs invalides.");
-  }
+  const title = formData.get("title");
+  const description = formData.get("description");
+  const price = parseFloat(formData.get("price"));
+  const stock = parseInt(formData.get("stock"));
+  const imageUrl = formData.get("imageUrl");
 
   const slug = slugify(title);
 
   await prisma.product.create({
     data: {
       title,
-      slug,
       description,
       price,
-      stock: Number.isNaN(stock) ? 0 : stock,
-      imageUrl: imageUrl || null,
-      isActive: true,
-    },
+      stock,
+      imageUrl,
+      slug
+    }
   });
 
   revalidatePath("/products");
+}
+export async function getAllProducts() {
+  return prisma.product.findMany();
+}
+
+export async function getProductById(id) {
+  return prisma.product.findUnique({
+    where: { id }, 
+    include: { category: true },
+  });
 }

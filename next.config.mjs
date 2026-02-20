@@ -1,12 +1,76 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   images: {
+  images: {
+    // Domaines autorisés pour les images externes
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'fakestoreapi.com',
+        protocol: "https",
+        hostname: "fakestoreapi.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.googleusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "tse2.mm.bing.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.media1.fldgolf.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
       },
     ],
+    // Formats d'image à générer
+    formats: ["image/avif", "image/webp"],
+  },
+
+  async headers() {
+    return [
+      {
+        // Appliquer ces headers à toutes les routes
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
+          },
+        ],
+      },
+    ];
   },
 };
 

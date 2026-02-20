@@ -5,6 +5,10 @@ export const content = [
 ];
 export const theme = {
     extend: {
+        fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-poppins)", "system-ui", "sans-serif"]
+      },
         animation: {
             'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         },
