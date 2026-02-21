@@ -88,7 +88,7 @@ export default async function ProductPage({ params }) {
           {/* Prix */}
           <div className="mb-8">
             <span className="text-5xl font-bold text-blue-600">
-              {product.price.toFixed(2)}
+              {product.price?.toFixed(2)}
             </span>
           </div>
 
@@ -121,7 +121,7 @@ export default async function ProductPage({ params }) {
             <dl className="space-y-2 text-sm">
               <div className="flex">
                 <dt className="font-semibold w-32">Categorie :</dt>
-                <dd className="text-gray-600">{product.category}</dd>
+                <dd className="text-gray-600">{product.category?.name}</dd>
               </div>
               <div className="flex">
                 <dt className="font-semibold w-32">Prix :</dt>
