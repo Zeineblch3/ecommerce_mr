@@ -71,7 +71,6 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET || ""
     })
   ],
-
   // Callbacks pour personnaliser le comportement
   callbacks: {
     // Callback JWT : ajoute des infos au token
