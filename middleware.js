@@ -11,9 +11,6 @@ export async function middleware(request) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  // ===============================================
-  // Routes protegees : utilisateur connecte requis
-  // ===============================================
   const protectedRoutes = ["/cart", "/orders", "/profile"];
   if (protectedRoutes.some((route) => pathname.startsWith(route)) && !token) {
     const loginUrl = new URL("/auth/login", request.url);
@@ -21,9 +18,6 @@ export async function middleware(request) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // ===============================================
-  // Routes admin : role ADMIN requis
-  // ===============================================
   const adminRoutes = ["/admin"];
   if (adminRoutes.some((route) => pathname.startsWith(route))) {
     if (!token) {
@@ -36,9 +30,6 @@ export async function middleware(request) {
     }
   }
 
-  // ===============================================
-  // Routes auth : rediriger si deja connecte
-  // ===============================================
   const authRoutes = ["/auth/login", "/auth/register"];
   if (authRoutes.some((route) => pathname.startsWith(route)) && token) {
     return NextResponse.redirect(new URL("/", request.url));
