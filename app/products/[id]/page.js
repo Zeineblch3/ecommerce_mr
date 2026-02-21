@@ -77,7 +77,7 @@ export default async function ProductPage({ params }) {
         <div>
           {/* Badge categorie */}
           <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-4 uppercase">
-            {product.category}
+            {product.category?.name}
           </span>
 
           {/* Titre */}
@@ -125,7 +125,9 @@ export default async function ProductPage({ params }) {
               </div>
               <div className="flex">
                 <dt className="font-semibold w-32">Prix :</dt>
-                <dd className="text-gray-600">{product.price}</dd>
+                <dd className="text-gray-600">
+                  {product.price?.toFixed(2)} €
+                </dd>
               </div>
               
               <div className="flex">
