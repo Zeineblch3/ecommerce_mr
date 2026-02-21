@@ -2,8 +2,8 @@
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 
-import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -62,7 +62,6 @@ export default function LoginPage() {
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         {/* Titre */}
@@ -165,6 +164,5 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
-    </Suspense>
   );
 }
